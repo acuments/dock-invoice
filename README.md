@@ -283,13 +283,13 @@ Pre-built binaries are attached to [GitHub Releases](https://github.com/acuments
 | `dock-invoice-windows.zip` | Windows (`.exe`) |
 | `dock-invoice-linux.tar.xz` | Linux |
 
-The CI workflow (`.github/workflows/build.yml`) runs tests on all three OSes, packages on each, and publishes release assets automatically on tags.
+The CI workflow (`.github/workflows/build.yml`) runs tests on push to `main`, pull requests, and manual dispatch. Binary packaging and GitHub Release publishing run only when you push a `v*` tag.
 
 ### Windows build
 
 **Option A — GitHub Releases (recommended):** Download `dock-invoice-windows.zip` from the [latest release](https://github.com/acuments/dock-invoice/releases/latest), or push a `v*` tag to trigger a new build.
 
-**Option B — GitHub Actions artifacts:** Push to `main` or run the workflow manually. The `package` job on `windows-latest` uploads `dock-invoice-windows.zip`.
+**Option B — GitHub Actions artifacts:** Push a `v*` tag. The `package` job on `windows-latest` uploads `dock-invoice-windows.zip`.
 
 **Option C — fyne-cross on any host with Docker:**
 
@@ -310,7 +310,7 @@ fyne package -os windows -release
 
 **Option A — GitHub Releases (recommended):** Download `dock-invoice-linux.tar.xz` from the [latest release](https://github.com/acuments/dock-invoice/releases/latest).
 
-**Option B — GitHub Actions artifacts:** Same workflow; `ubuntu-latest` uploads `dock-invoice-linux.tar.xz`.
+**Option B — GitHub Actions artifacts:** Push a `v*` tag; the `package` job on `ubuntu-latest` uploads `dock-invoice-linux.tar.xz`.
 
 **Option C — fyne-cross:**
 
