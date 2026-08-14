@@ -93,10 +93,11 @@ jobs:
 
       - name: Prepare Windows release asset
         if: matrix.target == 'windows'
-        shell: bash
+        shell: pwsh
         run: |
-          exe="$(ls -1 *.exe | head -1)"
-          zip "dock-invoice-windows.zip" "$exe"
+          $exe = Get-ChildItem -Filter *.exe | Select-Object -First 1
+          if (-not $exe) { throw "no .exe produced by fyne package" }
+          Compress-Archive -Path $exe.FullName -DestinationPath dock-invoice-windows.zip
 
       - name: Prepare Linux release asset
         if: matrix.target == 'linux'
