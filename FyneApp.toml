@@ -1,0 +1,8 @@
+Website = "https://acuments.com"
+
+[Details]
+Icon = "dock-icon.png"
+Name = "Dock Invoice Generator"
+ID = "com.dock.invoice.desktop"
+Version = "0.1.0"
+Build = 12

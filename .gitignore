@@ -1,0 +1,12 @@
+/dist/
+/fyne-cross/
+*.app
+*.exe
+/invoicer
+/dock-invoice
+.DS_Store
+.claude
+.idea
+# Local dev data — real invoices, org DBs, reference photos (never commit)
+testdata
+marketing

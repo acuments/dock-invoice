@@ -1,0 +1,70 @@
+{
+  "type": "domestic",
+  "layoutStyle": "classic",
+  "number": "DOM2425-1",
+  "referenceNo": "",
+  "date": "2024-04-30",
+  "dueDate": "2024-05-15",
+  "copyType": "ORIGINAL",
+  "placeOfSupply": "33-Tamil Nadu",
+  "countryOfSupply": "",
+  "currency": "INR",
+  "fxFactor": "1",
+  "shippingBillNo": "",
+  "shippingBillDate": "",
+  "shippingPortCode": "",
+  "customer": {
+    "name": "Fabrikam Systems Pvt Ltd",
+    "gstin": "33BBBBB1111B2Z6",
+    "billingAddress": [
+      "Unit 402, Example Tower",
+      "100 Sample Marg, T Nagar",
+      "Chennai",
+      "600017 Tamil Nadu"
+    ],
+    "shippingAddress": [
+      "Unit 402, Example Tower",
+      "100 Sample Marg, T Nagar",
+      "Chennai",
+      "600017 Tamil Nadu"
+    ]
+  },
+  "seller": {
+    "name": "Aeryn Software Labs LLP",
+    "addressLines": [
+      "4th Floor, Prestige Palladium",
+      "129 Greams Road"
+    ],
+    "city": "Chennai",
+    "stateCode": "33",
+    "stateName": "Tamil Nadu",
+    "pincode": "600006",
+    "phone": "9876543210",
+    "email": "billing@example.com",
+    "gstin": "33AAECA1234A1Z9",
+    "pan": "AAECA1234A",
+    "logoPath": "",
+    "signaturePath": ""
+  },
+  "bank": {
+    "accountNumber": "10012345678",
+    "ifsc": "SBIN0001234",
+    "bankName": "Example National Bank",
+    "branchName": "Anna Nagar Branch",
+    "swiftCode": "",
+    "upiId": "demo@examplebank"
+  },
+  "items": [
+    {
+      "description": "Software development services",
+      "hsnSac": "998314",
+      "quantity": "1.00",
+      "unit": "UNT",
+      "rateUSD": "100000.00",
+      "discountUSD": "0.00",
+      "taxRatePct": "18",
+      "cessRatePct": "0"
+    }
+  ],
+  "notes": ""
+}

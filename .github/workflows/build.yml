@@ -1,0 +1,136 @@
+name: Build
+
+# Fyne requires CGO, so Windows and Linux binaries cannot be produced by a
+# plain GOOS= cross-compile from a single machine. This workflow sidesteps
+# that entirely by using a native runner per target OS (macos-latest,
+# windows-latest, ubuntu-latest), each doing its own ordinary native CGO
+# build. This is the alternative to the Docker-based fyne-cross path
+# documented in build/package-cross.sh and the README.
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.5"
+
+      - name: Install Linux GUI build dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            gcc \
+            libgl1-mesa-dev \
+            xorg-dev \
+            libxxf86vm-dev \
+            libwayland-dev \
+            wayland-protocols \
+            libxkbcommon-dev \
+            libegl1-mesa-dev
+
+      - name: go test ./...
+        run: go test ./...
+
+      - name: go build ./...
+        run: go build ./...
+
+  package:
+    needs: test
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            target: darwin
+            asset: dock-invoice-macos.zip
+          - os: windows-latest
+            target: windows
+            asset: dock-invoice-windows.zip
+          - os: ubuntu-latest
+            target: linux
+            asset: dock-invoice-linux.tar.xz
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.5"
+
+      - name: Install Linux GUI build dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            gcc \
+            libgl1-mesa-dev \
+            xorg-dev \
+            libxxf86vm-dev \
+            libwayland-dev \
+            wayland-protocols \
+            libxkbcommon-dev \
+            libegl1-mesa-dev
+
+      - name: Install fyne packaging CLI
+        run: go install fyne.io/tools/cmd/fyne@latest
+
+      - name: Package (native, ${{ matrix.target }})
+        run: fyne package -os ${{ matrix.target }} -release
+
+      - name: Prepare macOS release asset
+        if: matrix.target == 'darwin'
+        run: zip -r dock-invoice-macos.zip *.app
+
+      - name: Prepare Windows release asset
+        if: matrix.target == 'windows'
+        shell: bash
+        run: |
+          exe="$(ls -1 *.exe | head -1)"
+          zip "dock-invoice-windows.zip" "$exe"
+
+      - name: Prepare Linux release asset
+        if: matrix.target == 'linux'
+        run: |
+          if [[ -f dock-invoice.tar.xz ]]; then
+            mv dock-invoice.tar.xz dock-invoice-linux.tar.xz
+          elif compgen -G "*.tar.xz" > /dev/null; then
+            mv *.tar.xz dock-invoice-linux.tar.xz
+          else
+            tar -cJf dock-invoice-linux.tar.xz dock-invoice
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dock-invoice-${{ matrix.target }}
+          path: ${{ matrix.asset }}
+          if-no-files-found: error
+
+  release:
+    needs: package
+    if: github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: dock-invoice-*
+          merge-multiple: true
+          path: dist
+
+      - name: List release assets
+        run: ls -la dist/
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true

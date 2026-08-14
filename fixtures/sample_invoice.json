@@ -1,0 +1,67 @@
+{
+  "type": "export_lut",
+  "layoutStyle": "modern",
+  "number": "INV-01",
+  "referenceNo": "",
+  "date": "2024-04-30",
+  "dueDate": "2024-07-15",
+  "copyType": "ORIGINAL",
+  "placeOfSupply": "97-Other Territory",
+  "countryOfSupply": "UNITED STATES OF AMERICA",
+  "currency": "USD",
+  "fxFactor": "83.2",
+  "shippingBillNo": "",
+  "shippingBillDate": "",
+  "shippingPortCode": "",
+  "customer": {
+    "name": "Northwind Trading Co.",
+    "gstin": "",
+    "billingAddress": [
+      "1209 Orange Street",
+      "Wilmington, DE 19801",
+      "United States of America"
+    ],
+    "shippingAddress": [
+      "1209 Orange Street",
+      "Wilmington, DE 19801",
+      "United States of America"
+    ]
+  },
+  "seller": {
+    "name": "Aeryn Software Labs LLP",
+    "addressLines": [
+      "4th Floor, Prestige Palladium",
+      "129 Greams Road"
+    ],
+    "city": "Chennai",
+    "stateCode": "33",
+    "stateName": "Tamil Nadu",
+    "pincode": "600006",
+    "phone": "9876543210",
+    "email": "billing@example.com",
+    "gstin": "33AAECA1234A1Z9",
+    "pan": "AAECA1234A",
+    "logoPath": "",
+    "signaturePath": ""
+  },
+  "bank": {
+    "accountNumber": "10012345678",
+    "ifsc": "SBIN0001234",
+    "bankName": "Example National Bank",
+    "branchName": "Anna Nagar Branch",
+    "swiftCode": "EXAMPLEBBXXX"
+  },
+  "items": [
+    {
+      "description": "Software Development Services",
+      "hsnSac": "998314",
+      "quantity": "100.00",
+      "unit": "UNT",
+      "rateUSD": "4000.00",
+      "discountUSD": "0.00",
+      "taxRatePct": "18",
+      "cessRatePct": "0"
+    }
+  ],
+  "notes": ""
+}
